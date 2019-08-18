@@ -3,7 +3,7 @@ FreeMatches <- function(Competitions, localpath=""){
   Matches.df <- tibble()
   for(i in 1:nrow(Competitions)){
     matches=""
-    if (localpath=""){
+    if (localpath==""){
       Matches.url <- paste0("https://raw.githubusercontent.com/statsbomb/open-data/master/data/matches/", Competitions$competition_id[i], "/", Competitions$season_id[i], ".json")
       raw.matches <- GET(url = Matches.url)
       matches.string <- rawToChar(raw.matches$content)      matches <- fromJSON(matches.string, flatten = T)
