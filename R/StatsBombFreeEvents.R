@@ -1,10 +1,16 @@
-StatsBombFreeEvents <- function(MatchesDF = "ALL", Parallel = T){
+StatsBombFreeEvents <- function(MatchesDF = "ALL", Parallel = T, localpath=""){
   print("Whilst we are keen to share data and facilitate research, we also urge you to be responsible with the data. Please register your details on https://www.statsbomb.com/resource-centre and read our User Agreement carefully.")
   events.df <- tibble()
 
   if(Parallel == T){
     if(MatchesDF == "ALL"){
-      Matches2 <- FreeMatches(FreeCompetitions())
+      Matches2=""
+      if (localpath==""){
+        Matches2 <- FreeMatches(FreeCompetitions())
+      }else{
+        Matches2 <- FreeMatches(FreeCompetitions(localpath), localpath)
+      }
+
 
       cl <- makeCluster(detectCores())
       registerDoParallel(cl)
@@ -33,7 +39,13 @@ StatsBombFreeEvents <- function(MatchesDF = "ALL", Parallel = T){
     }
   }  else { #Begin Else, parallel == F
     if(MatchesDF == "ALL"){
-      Matches2 <- FreeMatches(FreeCompetitions())
+      Matches2=""
+      if (localpath==""){
+        Matches2 <- FreeMatches(FreeCompetitions())
+      } else {
+        Matches2 <- FreeMatches(FreeCompetitions(localpath), localpath)
+      }
+
       for(i in 1:length(Matches2$match_id)){
         events <- get.matchFree(Matches2[i,])
         events.df <- bind_rows(events.df, events)
