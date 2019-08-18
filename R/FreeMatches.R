@@ -6,7 +6,8 @@ FreeMatches <- function(Competitions, localpath=""){
     if (localpath==""){
       Matches.url <- paste0("https://raw.githubusercontent.com/statsbomb/open-data/master/data/matches/", Competitions$competition_id[i], "/", Competitions$season_id[i], ".json")
       raw.matches <- GET(url = Matches.url)
-      matches.string <- rawToChar(raw.matches$content)      matches <- fromJSON(matches.string, flatten = T)
+      matches.string <- rawToChar(raw.matches$content)
+      matches <- fromJSON(matches.string, flatten = T)
     } else {
       matchFilePath <- paste0(localpath, "matches", "/", "matches/", Competitions$competition_id[i], "/", Compettions$season_id[i], ".json")
       matches <- fromJSON(matchFilePath, flatten = T)
